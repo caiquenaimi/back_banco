@@ -9,7 +9,7 @@ const pool = new Pool({
     host: 'localhost',
     database: 'aulaback',
     password: 'ds564',
-    port: 5432,
+    port: 7007,
 });
 
 const calcAge = (date) => {
@@ -130,7 +130,7 @@ app.delete('/usuarios/:id', async (req, res) => {
     try {
         const { id } = req.params;
         await pool.query('DELETE FROM usuarios WHERE id = $1', [id]);
-        res.status(200).send({ mensagem: 'Usuário excluído com sucesso' });
+        res.status(200).send({status: "sucesso", mensagem: 'Usuário excluído com sucesso' });
     } catch (error) {
         console.error('Erro ao excluir usuário:', error);
         res.status(500).send('Erro ao excluir usuário');
@@ -166,7 +166,7 @@ app.put('/usuarios/:id', async (req, res) => {
         const zodiacSign = calcZodiacSign(new Date(req.body.birthday));
         const { name, surname, email, birthday } = req.body;
         await pool.query('UPDATE usuarios SET name = $1, surname = $2, email = $3, birthday = $4, age = $5, zodiacSign = $6 WHERE id = $7', [name, surname, email, birthday, age, zodiacSign, id]);
-        res.status(200).send({ mensagem: 'Usuário atualizado com sucesso' });
+        res.status(200).send({status: "sucesso", mensagem: 'Usuário atualizado com sucesso' });
     } catch (error) {
         console.error('Erro ao atualizar usuário:', error);
         res.status(500).send('Erro ao atualizar usuário');
